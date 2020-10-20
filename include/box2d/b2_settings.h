@@ -25,6 +25,8 @@
 
 #include "b2_types.h"
 
+#define B2_API
+
 /// @file
 /// Settings that can be overriden for your application
 ///
