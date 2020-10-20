@@ -24,7 +24,6 @@
 #define B2_SETTINGS_H
 
 #include "b2_types.h"
-#include "b2_api.h"
 
 /// @file
 /// Settings that can be overriden for your application
@@ -55,31 +54,29 @@
 // User data
 
 /// You can define this to inject whatever data you want in b2Body
-struct B2_API b2BodyUserData
+struct b2BodyUserData
 {
-	b2BodyUserData()
-	{
-		pointer = 0;
-	}
+	b2BodyUserData() : pbody(0), pentity(0) {}
+	b2BodyUserData(void* pbody, void* pentity, void* preg) : pbody(pbody), pentity(pentity), preg(preg) {}
 
-	/// For legacy compatibility
-	uintptr_t pointer;
+	void* pbody;
+	void* pentity;
+	void* preg;
 };
 
 /// You can define this to inject whatever data you want in b2Fixture
-struct B2_API b2FixtureUserData
+struct b2FixtureUserData
 {
-	b2FixtureUserData()
-	{
-		pointer = 0;
-	}
+	b2FixtureUserData() : pshape(0), pentity(0) {}
+	b2FixtureUserData(void* pshape, void* pentity, void* preg) : pshape(pshape), pentity(pentity), preg(preg) {}
 
-	/// For legacy compatibility
-	uintptr_t pointer;
+	void* pshape;
+	void* pentity;
+	void* preg;
 };
 
 /// You can define this to inject whatever data you want in b2Joint
-struct B2_API b2JointUserData
+struct b2JointUserData
 {
 	b2JointUserData()
 	{
@@ -93,8 +90,8 @@ struct B2_API b2JointUserData
 // Memory Allocation
 
 /// Default allocation functions
-B2_API void* b2Alloc_Default(int32 size);
-B2_API void b2Free_Default(void* mem);
+void* b2Alloc_Default(int32 size);
+void b2Free_Default(void* mem);
 
 /// Implement this function to use your own memory allocator.
 inline void* b2Alloc(int32 size)
@@ -109,7 +106,7 @@ inline void b2Free(void* mem)
 }
 
 /// Default logging function
-B2_API void b2Log_Default(const char* string, va_list args);
+void b2Log_Default(const char* string, va_list args);
 
 /// Implement this to use your own logging.
 inline void b2Log(const char* string, ...)
